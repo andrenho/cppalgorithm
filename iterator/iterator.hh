@@ -1,7 +1,7 @@
 #ifndef CPPALGORITHM_ITERATOR_HH
 #define CPPALGORITHM_ITERATOR_HH
 
-#include "../underlying/underlying.hh"
+#include "../underlying/datastructure.hh"
 
 template <typename T>
 class MyIterator {

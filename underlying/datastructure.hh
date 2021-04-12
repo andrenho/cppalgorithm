@@ -1,22 +1,25 @@
-#ifndef CPPALGORITHM_UNDERLYING_HH
-#define CPPALGORITHM_UNDERLYING_HH
+#ifndef CPPALGORITHM_DATASTRUCTURE_HH
+#define CPPALGORITHM_DATASTRUCTURE_HH
 
 template <typename T>
-class Underlying {
+class DataStructure {
 public:
     virtual void        push(T&& t) = 0;
-    virtual bool        is_empty() const = 0;
+    virtual bool        empty() const = 0;
     virtual size_t      size() const = 0;
     virtual T&          at(size_t pos) = 0;
+    virtual void        insert(size_t pos, T&& t) = 0;
+    virtual T           remove(size_t pos) = 0;
+    virtual void        clear() = 0;
     
     T pop() {
-        if (is_empty())
+        if (empty())
             throw std::runtime_error("Empty structure.");
         return unchecked_pop();
     }
     
     T const& at(size_t pos) const {
-        return const_cast<Underlying*>(this)->at(pos);
+        return const_cast<DataStructure*>(this)->at(pos);
     }
     
 protected:

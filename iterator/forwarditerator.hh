@@ -6,7 +6,7 @@
 template <typename T>
 class ForwardIterator : public MyIterator<T> {
 public:
-    explicit ForwardIterator(Underlying<T> const* underlying) : underlying_(underlying) {}
+    explicit ForwardIterator(DataStructure<T> const* underlying) : underlying_(underlying) {}
     
     bool has_next() const override
     {
@@ -18,7 +18,7 @@ public:
     T& next() override
     {
         index_++;
-        return const_cast<Underlying<T>*>(underlying_)->at(index_ - 1);
+        return const_cast<DataStructure<T>*>(underlying_)->at(index_ - 1);
     }
     
     T const& next() const override
@@ -27,7 +27,7 @@ public:
     }
 
 private:
-    Underlying<T> const* underlying_;
+    DataStructure<T> const* underlying_;
     mutable size_t index_ = 0;
 };
 
