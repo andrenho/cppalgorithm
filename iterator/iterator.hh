@@ -1,8 +1,6 @@
 #ifndef CPPALGORITHM_ITERATOR_HH
 #define CPPALGORITHM_ITERATOR_HH
 
-#include "../datastructures/datastructure.hh"
-
 template <typename D, typename T>
 class Iterator {
 public:

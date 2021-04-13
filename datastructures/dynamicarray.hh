@@ -3,11 +3,12 @@
 
 #include <cstddef>
 #include <cstdint>
-#include "datastructure.hh"
+#include "../super/pushabledatastructure.hh"
+#include "../super/randomaccessdatastructure.hh"
 #include "../iterator/iterator.hh"
 
 template <typename T>
-class DynamicArray : public DataStructure<T> {
+class DynamicArray : public PushableDataStructure<T>, public RandomAccessDataStructure<T> {
 public:
     void push(T&& t) override
     {
@@ -34,6 +35,13 @@ public:
     }
     
     T& operator[](size_t pos) override
+    {
+        if (pos >= size_)
+            throw std::runtime_error("Array size exceeded.");
+        return data_[pos];
+    }
+    
+    T const& operator[](size_t pos) const override
     {
         if (pos >= size_)
             throw std::runtime_error("Array size exceeded.");

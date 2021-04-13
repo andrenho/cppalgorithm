@@ -3,9 +3,12 @@
 #include "../datastructures/fixedarray.hh"
 #include "../datastructures/dynamicarray.hh"
 #include "../datastructures/linkedlist.hh"
+#include "../datastructures/bag.hh"
+#include "../datastructures/queue.hh"
+#include "../datastructures/stack.hh"
 
 template <typename T>
-T run_test()
+T test_list()
 {
     T ds;
     REQUIRE(ds.empty() == true);
@@ -67,16 +70,56 @@ T run_test()
 }
 
 TEST_CASE("DynamicArray") {
-    run_test<DynamicArray<int>>();
+    test_list<DynamicArray<int>>();
 }
 
 TEST_CASE("FixedArray") {
-    auto ds = run_test<FixedArray<int, 10>>();
+    auto ds = test_list<FixedArray<int, 10>>();
     for (size_t i = 0; i < 10; ++i)
         ds.push((int) i);
     REQUIRE_THROWS(ds.push(99));
 }
 
 TEST_CASE("LinkedList") {
-    run_test<LinkedList<int>>();
+    test_list<LinkedList<int>>();
+}
+
+TEST_CASE("Bag") {
+    Bag<int> bag;
+    bag.add(10);
+    bag.add(20);
+    bag.add(30);
+    REQUIRE(bag.size() == 3);
+    size_t count = 0;
+    for (auto it = bag.iterator(); it.has_current(); it.next())
+        ++count;
+    REQUIRE(count == 3);
+}
+
+TEST_CASE("Stack") {
+    Stack<int> stack;
+    stack.push(10);
+    stack.push(20);
+    stack.push(30);
+    REQUIRE(stack.peek() == 30);
+    REQUIRE(stack.pop() == 30);
+    REQUIRE(stack.pop() == 20);
+    REQUIRE(stack.peek() == 10);
+    REQUIRE(stack.empty() == false);
+    REQUIRE(stack.pop() == 10);
+    REQUIRE(stack.empty() == true);
+}
+
+TEST_CASE("Queue") {
+    Queue<int> queue;
+    queue.enqueue(10);
+    queue.enqueue(20);
+    queue.enqueue(30);
+    REQUIRE(queue.peek() == 10);
+    REQUIRE(queue.dequeue() == 10);
+    REQUIRE(queue.dequeue() == 20);
+    REQUIRE(queue.peek() == 30);
+    REQUIRE(queue.empty() == false);
+    REQUIRE(queue.dequeue() == 30);
+    REQUIRE(queue.empty() == true);
 }

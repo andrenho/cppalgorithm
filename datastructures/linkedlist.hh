@@ -3,11 +3,12 @@
 
 #include <cstddef>
 #include <stdexcept>
-#include "datastructure.hh"
+#include "../super/pushabledatastructure.hh"
+#include "../super/randomaccessdatastructure.hh"
 #include "../iterator/iterator.hh"
 
 template <typename T>
-class LinkedList : public DataStructure<T> {
+class LinkedList : public PushableDataStructure<T>, public RandomAccessDataStructure<T> {
     struct Node {
         T t;
         Node* next = nullptr;
@@ -45,6 +46,11 @@ public:
     }
     
     T& operator[](size_t pos) override
+    {
+        return find_node(pos)->t;
+    }
+    
+    T const& operator[](size_t pos) const override
     {
         return find_node(pos)->t;
     }
@@ -118,7 +124,7 @@ public:
     Item next(Item const& item) const {
         return Item { item.node->next };
     }
-    
+
 protected:
     T unchecked_pop() override
     {
