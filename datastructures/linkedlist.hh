@@ -4,9 +4,15 @@
 #include <cstddef>
 #include <stdexcept>
 #include "datastructure.hh"
+#include "../iterator/iterator.hh"
 
 template <typename T>
 class LinkedList : public DataStructure<T> {
+    struct Node {
+        T t;
+        Node* next = nullptr;
+    };
+
 public:
     void push(T&& t) override
     {
@@ -38,7 +44,7 @@ public:
         return i;
     }
     
-    T& at(size_t pos) override
+    T& operator[](size_t pos) override
     {
         return find_node(pos)->t;
     }
@@ -91,11 +97,28 @@ public:
         data_ = nullptr;
     }
     
-    ForwardIterator<T> iterator() const
-    {
-        return ForwardIterator<T>(this);
+    // iterator support
+    
+    struct Item {
+        LinkedList<T>::Node* node = nullptr;
+    };
+    
+    Iterator<LinkedList<T>, T> iterator() const {
+        return Iterator<LinkedList<T>, T>(*this, Item { data_ });
     }
-
+    
+    bool has_current(Item const& item) const {
+        return item.node != nullptr;
+    }
+    
+    T& get(Item const& item) {
+        return item.node->t;
+    }
+    
+    Item next(Item const& item) const {
+        return Item { item.node->next };
+    }
+    
 protected:
     T unchecked_pop() override
     {
@@ -115,11 +138,6 @@ protected:
     }
 
 private:
-    struct Node {
-        T t;
-        Node* next = nullptr;
-    };
-    
     Node* data_ = nullptr;
     
     Node* find_node(size_t pos) const

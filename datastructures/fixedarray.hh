@@ -3,8 +3,8 @@
 
 #include <cstddef>
 #include <stdexcept>
-#include "../iterator/forwarditerator.hh"
 #include "datastructure.hh"
+#include "../iterator/iterator.hh"
 
 template <typename T, size_t N>
 class FixedArray : public DataStructure<T> {
@@ -26,7 +26,7 @@ public:
         return size_;
     }
     
-    T& at(size_t pos) override
+    T& operator[](size_t pos) override
     {
         if (pos >= size_)
             throw std::runtime_error("Array size exceeded.");
@@ -59,9 +59,26 @@ public:
         size_ = 0;
     }
     
-    ForwardIterator<T> iterator() const
-    {
-        return ForwardIterator<T>(this);
+    // iterator support
+    
+    struct Item {
+        size_t current = 0;
+    };
+    
+    Iterator<FixedArray<T, N>, T> iterator() const {
+        return Iterator<FixedArray<T, N>, T>(*this, Item());
+    }
+    
+    bool has_current(Item const& item) const {
+        return item.current < size_;
+    }
+    
+    T& get(Item const& item) {
+        return data_[item.current];
+    }
+    
+    Item next(Item const& item) const {
+        return Item { item.current + 1 };
     }
 
 protected:

@@ -7,7 +7,7 @@ public:
     virtual void        push(T&& t) = 0;
     virtual bool        empty() const = 0;
     virtual size_t      size() const = 0;
-    virtual T&          at(size_t pos) = 0;
+    virtual T&          operator[](size_t pos) = 0;
     virtual void        insert(size_t pos, T&& t) = 0;
     virtual T           remove(size_t pos) = 0;
     virtual void        clear() = 0;
@@ -18,7 +18,7 @@ public:
         return unchecked_pop();
     }
     
-    T const& at(size_t pos) const {
+    T const& operator[](size_t pos) const {
         return const_cast<DataStructure*>(this)->at(pos);
     }
     

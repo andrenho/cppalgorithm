@@ -4133,7 +4133,7 @@ namespace Generators {
             }
 
             const auto success = m_generator.next();
-            // If the underlying generator does not contain enough values
+            // If the datastructures generator does not contain enough values
             // then we cut short as well
             if (!success) {
                 m_returned = m_target;
@@ -4217,7 +4217,7 @@ namespace Generators {
             // 1) We are still reading the generator
             // 2) We are reading our own cache
 
-            // In the first case, we need to poke the underlying generator.
+            // In the first case, we need to poke the datastructures generator.
             // If it happily moves, we are left in that state, otherwise it is time to start reading from our cache
             if (m_current_repeat == 0) {
                 const auto success = m_generator.next();
