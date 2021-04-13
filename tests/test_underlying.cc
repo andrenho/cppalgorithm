@@ -52,6 +52,10 @@ T run_test()
     REQUIRE(ds.at(0) == 20);
     REQUIRE(ds.size() == 3);
     
+    REQUIRE(ds.remove(2) == 50);
+    REQUIRE(ds.size() == 2);
+    REQUIRE(ds.at(1) == 40);
+    
     ds.clear();
     REQUIRE(ds.empty() == true);
     return ds;
