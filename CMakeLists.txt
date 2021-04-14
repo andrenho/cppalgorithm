@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(SOURCES datastructures/dynamicarray.hh datastructures/fixedarray.hh iterator/iterator.hh datastructures/linkedlist.hh
     iterator/iterator.hh super/basicdatastructure.hh super/sizeabledatastructure.hh super/pushabledatastructure.hh
-    super/randomaccessdatastructure.hh datastructures/bag.hh super/addeabledatastructure.hh datastructures/stack.hh datastructures/queue.hh)
+    super/randomaccessdatastructure.hh datastructures/bag.hh super/addeabledatastructure.hh datastructures/stack.hh datastructures/queue.hh super/array.hh)
 
 # add_library(algorithm ${SOURCES})
 
